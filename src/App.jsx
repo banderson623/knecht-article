@@ -47,11 +47,18 @@ const Header = ({children}) => {
 
 const ReadMoreButton = ({title, onClick, contentSize}) => {
   return (
-    <div className="border-b-2 mb-10">
+    <div className="flex mb-6 border-b-2 opacity-50 hover:opacity-100 justify-center"
+         onClick={onClick}
+         style={{
+          //  backgroundImage: "linear-gradient(135deg, #ccc 50%, transparent 50%),linear-gradient(225deg, #ccc 50%, transparent 50%)",
+          //  backroundPosition: "top left, top left",
+          //  backgroundSize: "12px 12px",
+          //  backgroundRepeat: "repeat-x"
+         }}>
       <button
-        style={{marginBottom: "-1.3rem"}}
-        className="block m-auto rounded-full px-4 py-2 bg-white hover:bg-gray-200 border-2 border-gray-200 text-base" onClick={onClick}>
-        {title} <span className="text-sm text-gray-400"> {Math.ceil(contentSize / 20)} seconds </span>
+        style={{marginBottom: "-1.2rem"}}
+        className="rounded-full px-4 py-1 bg-white hover:bg-gray-200 border-2 border-gray-200 text-base">
+        {title} <span className="text-sm ml-4 text-gray-400"> {Math.ceil(contentSize / 15)} seconds </span>
       </button>
     </div>
   )
@@ -60,9 +67,13 @@ const ReadMoreButton = ({title, onClick, contentSize}) => {
 const Paragraph = ({children, depth}) => {
   const [shown, setShown] = useState(false);
 
+  depth = depth || 'short'
+
   let className = "leading-relaxed my-3 text-xl md:text-xl md:leading-loose"
 
-  depth = depth || 'short'
+  if(depth !== 'short') className += " pl-2 -ml-4 border-l-8 "
+  if(depth == 'medium') className += " border-green-300"
+  if(depth == 'long') className += " border-blue-300"
 
   const Content = () => (<p className={className}>{children}</p>)
 
@@ -77,9 +88,11 @@ const Paragraph = ({children, depth}) => {
   return <Content />
 }
 
+const P = Paragraph;
+
 const InDepthSelector = () => {
   const Container = ({children}) => (
-    <div className="my-4 text-center md:max-w-xl mx-auto">
+    <div className="md:my-4 p-4 -mx-4 md:mx-auto text-center md:max-w-xl mx-auto shadow-lg md:rounded-lg ">
       {children}
     </div>
   )
@@ -109,9 +122,9 @@ const InDepthSelector = () => {
         <InfoIcon className="inline-block text-gray-600"/>
       </div>
       <div className="flex">
-        <Option value="short" selected>The fastest way to read this article</Option>
-        <Option value="medium">Next next level, dive a little deeper</Option>
-        <Option value="long">You are probably a college professor</Option>
+        <Option value="short" selected>Concise and to the point</Option>
+        <Option value="medium">Round out your knowledge</Option>
+        <Option value="long">The background & quirks</Option>
       </div>
     </Container>
   )
@@ -139,6 +152,20 @@ function App() {
             <Paragraph depth="long">Larger states do get more electoral votes, but, because the U.S. Senate is the most malapportioned legislature in the world, there is not a one-to-one ratio between population and Electoral Votes.  Let’s use the example of California and Wyoming.  The website 270towin.com estimated that California gets one electoral vote for every 680,000 people, while Wyoming gets one per 190,000.</Paragraph>
           </Paragraph>
           <Paragraph>States decide how to allocate their electoral votes.  Most states choose a winner-take-all system, where the candidate who gets the most votes in that state gets all the Electoral Votes.</Paragraph>
+          <Paragraph depth="medium">Consider Arizona in the 2020 Presidential Election.  Biden narrowly beat Trump 1,672,143 votes (49.4%) to 1,661,686 (49.0%).  But despite winning by just 10,457 votes, Joe Biden received all of Arizona’s 11 Electoral Votes, and Trump received none.
+            <Paragraph depth="long">This discrepancy is what political scientists call a mechanical electoral bias.  Two states—Maine and Nebraska—employ the “congressional district method.”  Both states give two electoral votes to the candidate who received the most votes in that state.  But, and here is where we get the “congressional district” part of the equation, candidates receive one electoral vote for each congressional district they win (Maine has two congressional districts, and Nebraska has three).  As a result, Maine and Nebraska can, and often do, split their electoral votes.  For instance, in the 2020 Presidential Election, Donald Trump won four Electoral Votes in Nebraska, and Biden won one; in Maine, Biden won three Electoral Votes and Trump one. </Paragraph>
+          </Paragraph>
+
+          <Paragraph>A candidate needs 270 out of 538 Electoral Votes to win the presidency.</Paragraph>
+          <Paragraph depth="medium">A sharp-eyed observer might note that there are 538 Electoral Votes but only 535 Members of Congress.  What gives?  The extra three votes are for citizens of Washington D.C., who can vote in presidential, but not congressional, elections.
+            <Paragraph depth="long">There is also talk about admitting Puerto Rico as the 51st state.  If that happens, Puerto Rico would likely have seven Electoral Votes, which would mean future presidents would have to win 273 of the 545 total Electoral Votes.</Paragraph>
+          </Paragraph>
+
+          <Paragraph>If no candidate receives 270 Electoral Votes, the House of Representatives elects the next president.  </Paragraph>
+          <Paragraph depth="medium">In this scenario, each state’s delegation gets a single vote.  For instance, all of California’s 53 representatives would deliberate and cast one vote for president.  The candidate who received a majority of states’ votes (26/50) becomes president.  Although America’s two-party system means that the House rarely chooses the president, it has happened twice: in 1800 and 1824.
+
+            <Paragraph depth="long">And it is certainly possible that the U.S. House might elect a future president if a popular third-party candidate came along and siphoned off votes from the two major-party candidates.  The likelihood of a third-party candidate stealing votes and sending the election to the House increases if the candidate has strong regional support, like George Wallace in 1968.  </Paragraph>
+          </Paragraph>
         </Section>
       </ArticleBody>
     </Article>
